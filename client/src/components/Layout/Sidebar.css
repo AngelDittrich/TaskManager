@@ -1,0 +1,109 @@
+.sidebar {
+    position: fixed;
+    left: var(--space-md);
+    top: var(--space-md);
+    bottom: var(--space-md);
+    width: 260px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar__container {
+    background: var(--color-surface-white);
+    height: 100%;
+    width: 100%;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+    /* Optional glass effect if desired, but sticking to solid white for sidebar as per request "Default state: light background" */
+}
+
+.sidebar__logo {
+    margin-bottom: var(--space-2xl);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+    background: var(--color-surface-black);
+    color: var(--color-surface-white);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.sidebar__nav ul {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.sidebar__item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: 12px var(--space-md);
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-medium);
+    transition: all var(--transition-fast);
+    text-align: left;
+}
+
+.sidebar__item:hover {
+    background: var(--color-surface-light-hover);
+    color: var(--color-text-primary);
+}
+
+.sidebar__item--active {
+    background: var(--color-surface-black) !important;
+    color: var(--color-text-inverse) !important;
+    box-shadow: var(--shadow-sm);
+}
+
+.sidebar__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.sidebar__icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.sidebar__footer {
+    margin-top: auto;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--color-border-subtle);
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    background: var(--color-surface-light-hover);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    color: var(--color-text-primary);
+}

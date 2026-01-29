@@ -1,0 +1,27 @@
+.layout {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    background-color: var(--color-surface-light);
+}
+
+.layout__content {
+    flex: 1;
+    margin-left: calc(260px + var(--space-md) * 2);
+    /* Sidebar width + gap */
+    padding: var(--space-md);
+    /* The content area itself uses CSS Grid in the dashboard, 
+     but this container ensures it sits to the right of the sidebar */
+    max-width: 1600px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+        /* Mobile handling to be added later or hidden for mvp */
+    }
+
+    .layout__content {
+        margin-left: 0;
+    }
+}

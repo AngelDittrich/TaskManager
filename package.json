@@ -1,0 +1,27 @@
+{
+  "name": "task-manager-modern",
+  "version": "1.0.0",
+  "description": "Modern Task Manager with Node.js, MongoDB, and React",
+  "main": "server/index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && nodemon index.js",
+    "client": "cd client && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install"
+  },
+  "keywords": [
+    "task-manager",
+    "nodejs",
+    "mongodb",
+    "react"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "lucide-react": "^0.563.0",
+    "mongodb": "^7.0.0"
+  }
+}
