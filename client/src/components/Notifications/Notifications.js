@@ -17,6 +17,7 @@ const Notifications = () => {
   const loadNotifications = async () => {
     try {
       const response = await getNotifications();
+      console.log('Notifications loaded:', response.data);
       setNotifications(response.data);
     } catch (error) {
       console.error('Error loading notifications:', error);

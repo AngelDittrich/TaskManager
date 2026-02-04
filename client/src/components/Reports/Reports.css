@@ -1,147 +1,130 @@
-.reports-container {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+/* Reports Layout - extends Dashboard bento-grid */
+.reports-layout {
+  /* Inherits bento-grid from Dashboard, nothing special needed unless overrides */
 }
 
-.reports-container h2 {
-  color: #333;
+/* Helper for full width */
+.span-4-col {
+  grid-column: span 5;
+}
+
+.reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.reports-header h2 {
   font-size: 1.8rem;
-  margin-bottom: 25px;
+  margin: 0;
+  color: #333;
 }
 
 .reports-buttons {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
-  margin-bottom: 25px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .report-button {
-  background-color: black;
+  background-color: var(--color-surface-black, #000);
   color: white;
   border: none;
-  padding: 15px 20px;
-  border-radius: 12px;
+  padding: 10px 18px;
+  border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: ease-in-out 0.2s;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
 }
 
 .report-button:hover:not(:disabled) {
-  background-color: rgba(210, 210, 210, 0.82);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-  color: black;
+  opacity: 0.8;
+  transform: translateY(-1px);
 }
 
 .report-button:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .report-button.export {
-  background-color: white;
-  color: black;
-  border: 2px solid black;
+  background-color: transparent;
+  color: var(--color-surface-black, #000);
+  border: 2px solid var(--color-surface-black, #000);
 }
 
+.report-button.export:hover:not(:disabled) {
+  background-color: var(--color-surface-light-hover, #f8f9fa);
+}
+
+/* Filters */
 .report-filters {
   display: flex;
   gap: 15px;
-  margin-bottom: 25px;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .filter-select,
 .filter-input {
-  padding: 10px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-subtle, #e0e0e0);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
 }
 
-.filter-input {
-  cursor: pointer;
-}
-
-.report-content {
-  margin-top: 30px;
-}
-
-.report-stats {
-  margin-bottom: 30px;
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 15px;
-}
-
-.stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  opacity: 0.9;
-  text-transform: capitalize;
-  margin-bottom: 8px;
-}
-
-.stat-value {
-  font-size: 2rem;
-  font-weight: 700;
-}
-
-.report-data h3 {
-  color: #333;
-  font-size: 1.3rem;
-  margin-bottom: 15px;
-}
-
-.data-table {
+/* Tables */
+.data-table-container {
   overflow-x: auto;
 }
 
-.data-table table {
+.report-data-table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
-  border-radius: 8px;
-  overflow: hidden;
+  min-width: 600px;
 }
 
-.data-table thead {
-  background: #667eea;
-  color: white;
-}
-
-.data-table th {
-  padding: 12px;
+.report-data-table th {
   text-align: left;
+  padding: 16px;
   font-weight: 600;
+  color: var(--color-text-secondary, #666);
+  border-bottom: 2px solid var(--color-border-subtle, #f0f0f0);
 }
 
-.data-table td {
-  padding: 12px;
-  border-bottom: 1px solid #e0e0e0;
+.report-data-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--color-border-subtle, #f0f0f0);
+  font-size: 0.95rem;
 }
 
-.data-table tbody tr:hover {
-  background: #f8f9fa;
-}
-
-.data-table tbody tr:last-child td {
+.report-data-table tr:last-child td {
   border-bottom: none;
+}
+
+.report-data-table tr:hover {
+  background-color: var(--color-surface-light-hover, #f9f9f9);
+}
+
+@media (max-width: 1000px) {
+  .span-4-col {
+    grid-column: span 2; /* In 3-col grid (max-width 1200) likely span 3, but let's stick to safe defaults */
+  }
+}
+
+@media (max-width: 600px) {
+  .reports-buttons {
+    width: 100%;
+  }
+  .report-button {
+    flex: 1;
+    justify-content: center;
+  }
 }

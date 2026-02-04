@@ -127,24 +127,23 @@ const Dashboard = () => {
             </Card>
 
             {/* 2. Visual Report Card (New) */}
+            {/* 2. Visual Report Card (New) */}
             <Card variant="primary" className="grid-item progress-card">
               <h3>Task Trends</h3>
-              {reportStats ? (
-                <div className="chart-container">
-                  <div className="chart-bar-group">
-                    <div className="chart-bar" style={{ height: `${(reportStats.completada / (reportStats.total || 1)) * 100}%` }}></div>
-                    <span className="chart-label">Done</span>
-                  </div>
-                  <div className="chart-bar-group">
-                    <div className="chart-bar" style={{ height: `${(reportStats.pendiente / (reportStats.total || 1)) * 100}%`, background: '#ffa502' }}></div>
-                    <span className="chart-label">Todo</span>
-                  </div>
-                  <div className="chart-bar-group">
-                    <div className="chart-bar" style={{ height: `${((reportStats['en-progreso'] || 0) / (reportStats.total || 1)) * 100}%`, background: '#3742fa' }}></div>
-                    <span className="chart-label">Prog</span>
-                  </div>
+              <div className="chart-container">
+                <div className="chart-bar-group">
+                  <div className="chart-bar" style={{ height: `${reportStats ? (reportStats.completada / (reportStats.total || 1)) * 100 : 0}%` }}></div>
+                  <span className="chart-label">Done</span>
                 </div>
-              ) : <p>Loading stats...</p>}
+                <div className="chart-bar-group">
+                  <div className="chart-bar" style={{ height: `${reportStats ? (reportStats.pendiente / (reportStats.total || 1)) * 100 : 0}%`, background: '#ffa502' }}></div>
+                  <span className="chart-label">Todo</span>
+                </div>
+                <div className="chart-bar-group">
+                  <div className="chart-bar" style={{ height: `${reportStats ? ((reportStats['en-progreso'] || 0) / (reportStats.total || 1)) * 100 : 0}%`, background: '#3742fa' }}></div>
+                  <span className="chart-label">Prog</span>
+                </div>
+              </div>
             </Card>
 
             {/* 3. Metrics Overview */}
@@ -166,7 +165,7 @@ const Dashboard = () => {
                 {loading ? (
                   <li className="loading-item">Loading...</li>
                 ) : recentActivity.length > 0 ? (
-                  recentActivity.map((activity, idx) => (
+                  recentActivity.slice(0, 6).map((activity, idx) => (
                     <li key={activity._id || idx} className="activity-item">
                       <div className="activity-dot"></div>
                       <div className="activity-info">

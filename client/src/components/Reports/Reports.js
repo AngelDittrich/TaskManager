@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getTaskReport, getProjectReport, getUserReport, exportToCSV } from '../../services/api';
 import { FaDownload, FaFileCsv } from 'react-icons/fa';
+import Card from '../UI/Card';
 import './Reports.css';
 
 const Reports = () => {
@@ -17,6 +18,7 @@ const Reports = () => {
     try {
       setLoading(true);
       setActiveReport(type);
+      setReportData(null); // Clear previous data
       let response;
 
       if (type === 'tasks') {
@@ -53,104 +55,110 @@ const Reports = () => {
   };
 
   return (
-    <div className="reports-container">
-      <h2>Generación de Reportes</h2>
+    <div className="bento-grid reports-layout animate-fade-in">
+      {/* 1. Header & Controls */}
+      <Card variant="primary" className="grid-item span-4-col">
+        <div className="reports-header">
+          <h2>Generación de Reportes</h2>
+          <div className="reports-buttons">
+            <button
+              onClick={() => handleGenerateReport('tasks')}
+              className={`report-button ${activeReport === 'tasks' ? 'active' : ''}`}
+              disabled={loading}
+            >
+              Reporte de Tareas
+            </button>
+            <button
+              onClick={() => handleGenerateReport('projects')}
+              className={`report-button ${activeReport === 'projects' ? 'active' : ''}`}
+              disabled={loading}
+            >
+              Reporte de Proyectos
+            </button>
+            <button
+              onClick={() => handleGenerateReport('users')}
+              className={`report-button ${activeReport === 'users' ? 'active' : ''}`}
+              disabled={loading}
+            >
+              Reporte de Usuarios
+            </button>
+            <button
+              onClick={() => handleExportCSV('tasks')}
+              className="report-button export"
+              disabled={loading}
+            >
+              <FaFileCsv /> Exportar a CSV
+            </button>
+          </div>
+        </div>
+      </Card>
 
-      <div className="reports-buttons">
-        <button
-          onClick={() => handleGenerateReport('tasks')}
-          className="report-button"
-          disabled={loading}
-        >
-          Reporte de Tareas
-        </button>
-        <button
-          onClick={() => handleGenerateReport('projects')}
-          className="report-button"
-          disabled={loading}
-        >
-          Reporte de Proyectos
-        </button>
-        <button
-          onClick={() => handleGenerateReport('users')}
-          className="report-button"
-          disabled={loading}
-        >
-          Reporte de Usuarios
-        </button>
-        <button
-          onClick={() => handleExportCSV('tasks')}
-          className="report-button export"
-          disabled={loading}
-        >
-          <FaFileCsv /> Exportar a CSV
-        </button>
-      </div>
-
+      {/* 2. Filters (Conditional) */}
       {(activeReport === 'tasks' || activeReport === 'projects') && (
-        <div className="report-filters">
-          <select
-            value={filters.status}
-            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-            className="filter-select"
-          >
-            <option value="">Todos los estados</option>
-            {activeReport === 'tasks' ? (
-              <>
-                <option value="pendiente">Pendiente</option>
-                <option value="en-progreso">En Progreso</option>
-                <option value="completada">Completada</option>
-                <option value="cancelada">Cancelada</option>
-              </>
-            ) : (
-              <>
-                <option value="activo">Activo</option>
-                <option value="pausado">Pausado</option>
-                <option value="completado">Completado</option>
-                <option value="cancelado">Cancelado</option>
-              </>
-            )}
-          </select>
-          <input
-            type="date"
-            value={filters.startDate}
-            onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-            placeholder="Fecha inicio"
-            className="filter-input"
-          />
-          <input
-            type="date"
-            value={filters.endDate}
-            onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
-            placeholder="Fecha fin"
-            className="filter-input"
-          />
+        <Card variant="primary" className="grid-item span-4-col">
+          <div className="report-filters">
+            <select
+              value={filters.status}
+              onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+              className="filter-select"
+            >
+              <option value="">Todos los estados</option>
+              {activeReport === 'tasks' ? (
+                <>
+                  <option value="pendiente">Pendiente</option>
+                  <option value="en-progreso">En Progreso</option>
+                  <option value="completada">Completada</option>
+                  <option value="cancelada">Cancelada</option>
+                </>
+              ) : (
+                <>
+                  <option value="activo">Activo</option>
+                  <option value="pausado">Pausado</option>
+                  <option value="completado">Completado</option>
+                  <option value="cancelado">Cancelado</option>
+                </>
+              )}
+            </select>
+            <input
+              type="date"
+              value={filters.startDate}
+              onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
+              className="filter-input"
+            />
+            <input
+              type="date"
+              value={filters.endDate}
+              onChange={(e) => setFilters({ ...filters, endDate: e.target.value })}
+              className="filter-input"
+            />
+          </div>
+        </Card>
+      )}
+
+      {/* 3. Loading State */}
+      {loading && (
+        <div className="grid-item span-4-col" style={{ textAlign: 'center', padding: '2rem' }}>
+          <p>Generando reporte...</p>
         </div>
       )}
 
-      {loading && <div className="loading">Generando reporte...</div>}
+      {/* 4. Statistics Cards */}
+      {reportData && reportData.stats && Object.entries(reportData.stats).map(([key, value]) => (
+        <Card key={key} variant="metric" className="grid-item">
+          <h3 style={{ textTransform: 'capitalize' }}>{key}</h3>
+          <div className="metric-value">{value}</div>
+        </Card>
+      ))}
 
+      {/* 5. Data Table */}
       {reportData && (
-        <div className="report-content">
-          <div className="report-stats">
-            {reportData.stats && (
-              <div className="stats-grid">
-                {Object.entries(reportData.stats).map(([key, value]) => (
-                  <div key={key} className="stat-card">
-                    <div className="stat-label">{key}</div>
-                    <div className="stat-value">{value}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-
+        <Card variant="primary" className="grid-item span-4-col">
           <div className="report-data">
             {activeReport === 'tasks' && reportData.tasks && (
               <div>
                 <h3>Tareas ({reportData.tasks.length})</h3>
-                <div className="data-table">
-                  <table>
+                <div className="data-table-container">
+                  <table className="report-data-table">
                     <thead>
                       <tr>
                         <th>Título</th>
@@ -164,8 +172,13 @@ const Reports = () => {
                       {reportData.tasks.map(task => (
                         <tr key={task._id}>
                           <td>{task.title}</td>
-                          <td>{task.status}</td>
-                          <td>{task.priority}</td>
+                          <td>
+                            <span className={`task-badge ${task.priority}`}>{task.status}</span>
+                          </td>
+                          <td>
+                            <span className={`task-priority-badge ${task.priority}`}></span>
+                            {task.priority}
+                          </td>
                           <td>{task.project?.name || '-'}</td>
                           <td>{task.assignedTo?.username || '-'}</td>
                         </tr>
@@ -179,8 +192,8 @@ const Reports = () => {
             {activeReport === 'projects' && reportData.projects && (
               <div>
                 <h3>Proyectos ({reportData.projects.length})</h3>
-                <div className="data-table">
-                  <table>
+                <div className="data-table-container">
+                  <table className="report-data-table">
                     <thead>
                       <tr>
                         <th>Nombre</th>
@@ -207,8 +220,8 @@ const Reports = () => {
             {activeReport === 'users' && reportData.users && (
               <div>
                 <h3>Usuarios ({reportData.users.length})</h3>
-                <div className="data-table">
-                  <table>
+                <div className="data-table-container">
+                  <table className="report-data-table">
                     <thead>
                       <tr>
                         <th>Usuario</th>
@@ -236,7 +249,7 @@ const Reports = () => {
               </div>
             )}
           </div>
-        </div>
+        </Card>
       )}
     </div>
   );
