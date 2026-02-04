@@ -5,7 +5,7 @@
 
 /* Helper for full width */
 .span-4-col {
-  grid-column: span 5;
+  grid-column: span 4;
 }
 
 .reports-header {

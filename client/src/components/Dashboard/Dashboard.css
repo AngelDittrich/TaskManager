@@ -260,14 +260,17 @@
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  height: 100%;
+  justify-content: flex-end;
 }
 
 .chart-bar {
   width: 12px;
   background: var(--color-surface-black);
-  border-radius: var(--radius-sm);
+  border-radius: 4px;
   transition: height 0.5s ease;
-  min-height: 4px;
+  min-height: 2px;
+  /* Small base so it's visible even at 0% */
 }
 
 .chart-label {

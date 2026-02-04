@@ -1,49 +1,163 @@
-.tasks-container {
-  background: transparent;
-  padding: var(--space-md);
+/* Tasks Layout - extends Dashboard bento-grid */
+
+/* Helper for full width */
+.span-4-col {
+  grid-column: span 4;
 }
 
 .tasks-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-lg);
+  flex-wrap: wrap;
+  gap: 15px;
 }
 
 .tasks-header h2 {
-  color: var(--color-text-primary);
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-semibold);
+  font-size: 1.8rem;
+  margin: 0;
+  color: var(--color-text-primary, #333);
+  font-weight: var(--font-weight-semibold, 600);
 }
 
+.btn-primary {
+  background-color: var(--color-surface-black, #000);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.btn-primary:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* Filters */
 .tasks-filters {
-  margin-bottom: 25px;
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .filter-select {
-  padding: 10px 15px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-subtle, #e0e0e0);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  background: white;
   cursor: pointer;
+  min-width: 180px;
 }
 
-.tasks-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+.filter-buttons {
+  display: flex;
+  gap: 8px;
 }
 
-.loading,
+.filter-btn {
+  padding: 8px 16px;
+  border: 2px solid var(--color-border-subtle, #e0e0e0);
+  background: white;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-primary, #333);
+}
+
+.filter-btn:hover {
+  border-color: var(--color-surface-black, #000);
+  background-color: var(--color-surface-light-hover, #f8f9fa);
+}
+
+.filter-btn.active {
+  background-color: var(--color-surface-black, #000);
+  color: white;
+  border-color: var(--color-surface-black, #000);
+}
+
+.filter-btn.overdue {
+  border-color: #ff4757;
+  color: #ff4757;
+}
+
+.filter-btn.overdue:hover {
+  background-color: rgba(255, 71, 87, 0.1);
+  border-color: #ff4757;
+}
+
+.filter-btn.overdue.active {
+  background-color: #ff4757;
+  color: white;
+  border-color: #ff4757;
+}
+
+/* Empty State */
 .empty-state {
   text-align: center;
   padding: 40px;
-  color: #666;
-  font-size: 1.1rem;
+  color: var(--color-text-tertiary, #999);
+  font-size: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .span-4-col {
+    grid-column: span 3;
+  }
 }
 
 @media (max-width: 768px) {
-  .tasks-grid {
-    grid-template-columns: 1fr;
+  .span-4-col {
+    grid-column: span 2;
+  }
+
+  .tasks-filters {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .filter-select {
+    width: 100%;
+  }
+
+  .filter-buttons {
+    width: 100%;
+  }
+
+  .filter-btn {
+    flex: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .tasks-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-primary {
+    width: 100%;
   }
 }

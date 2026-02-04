@@ -95,6 +95,7 @@ const Dashboard = () => {
         });
 
         setReportStats(taskStats);
+        console.log('Report Stats loaded:', taskStats);
         setRecentActivity(historyRes.data);
         setNotifications(notificationsRes.data);
       } catch (error) {
@@ -126,7 +127,6 @@ const Dashboard = () => {
               </div>
             </Card>
 
-            {/* 2. Visual Report Card (New) */}
             {/* 2. Visual Report Card (New) */}
             <Card variant="primary" className="grid-item progress-card">
               <h3>Task Trends</h3>
