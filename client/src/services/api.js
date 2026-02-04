@@ -2,6 +2,10 @@ import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL || 'https://taskmanager-1f0x.onrender.com/api';
 
+// Auth
+export const login = (email, password) => axios.post(`${API_URL}/auth/login`, { email, password });
+export const register = (username, email, password) => axios.post(`${API_URL}/auth/register`, { username, email, password });
+
 // Tasks
 export const getTasks = (params) => axios.get(`${API_URL}/tasks`, { params });
 export const getTask = (id) => axios.get(`${API_URL}/tasks/${id}`);

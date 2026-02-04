@@ -92,7 +92,8 @@
     padding-top: var(--space-lg);
     border-top: 1px solid var(--color-border-subtle);
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .user-avatar {
@@ -106,4 +107,13 @@
     font-size: 12px;
     font-weight: bold;
     color: var(--color-text-primary);
+}
+
+.logout-btn {
+    color: #ff3b30 !important;
+    /* iOS Red */
+}
+
+.logout-btn:hover {
+    background: rgba(255, 59, 48, 0.1) !important;
 }

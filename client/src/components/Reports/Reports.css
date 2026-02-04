@@ -1,11 +1,12 @@
 /* Reports Layout - extends Dashboard bento-grid */
 .reports-layout {
   /* Inherits bento-grid from Dashboard, nothing special needed unless overrides */
+  grid-template-columns: repeat(5, 1fr) !important;
 }
 
 /* Helper for full width */
-.span-4-col {
-  grid-column: span 4;
+.span-5-col {
+  grid-column: span 5;
 }
 
 .reports-header {
@@ -69,6 +70,7 @@
   gap: 15px;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 
 .filter-select,

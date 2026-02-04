@@ -1,95 +1,157 @@
+/* Login.css - iOS Style Redesign */
+:root {
+  --apple-blur: 20px;
+  --apple-glass: rgba(255, 255, 255, 0.7);
+  --apple-glass-border: rgba(255, 255, 255, 0.5);
+  --apple-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  --apple-blue: #007aff;
+  --apple-blue-hover: #0063ce;
+  --apple-text: #1d1d1f;
+  --apple-text-secondary: #86868b;
+  --apple-input-bg: rgba(255, 255, 255, 0.5);
+  --apple-radius: 18px;
+}
+
 .login-container {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f5f7 0%, #e1e1e6 100%);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   padding: 20px;
 }
 
 .login-card {
-  background: white;
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
+  background: var(--apple-glass);
+  backdrop-filter: blur(var(--apple-blur));
+  -webkit-backdrop-filter: blur(var(--apple-blur));
+  border: 1px solid var(--apple-glass-border);
+  border-radius: var(--apple-radius);
+  box-shadow: var(--apple-shadow);
+  padding: 40px;
+  text-align: center;
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-card h1 {
-  text-align: center;
-  color: #667eea;
-  margin-bottom: 10px;
-  font-size: 2rem;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--apple-text);
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
 }
 
 .subtitle {
-  text-align: center;
-  color: #666;
+  color: var(--apple-text-secondary);
+  font-size: 15px;
   margin-bottom: 30px;
-  font-size: 0.9rem;
 }
 
 .form-group {
   margin-bottom: 20px;
+  text-align: left;
 }
 
 .form-group label {
   display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
   margin-bottom: 8px;
-  color: #333;
-  font-weight: 500;
+  margin-left: 4px;
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #e0e0e0;
-  border-radius: 8px;
-  font-size: 1rem;
-  transition: border-color 0.3s;
+  padding: 16px;
+  background: var(--apple-input-bg);
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 16px;
+  color: var(--apple-text);
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  /* Ensure padding doesn't overflow width */
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #667eea;
+  background: white;
+  border-color: var(--apple-blue);
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
 }
 
 .login-button {
   width: 100%;
-  padding: 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 16px;
+  background: var(--apple-text);
+  /* Black button like "Sign in with Apple" */
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 1rem;
+  border-radius: 12px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.1s ease, background 0.2s ease;
+  margin-top: 10px;
 }
 
 .login-button:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background: #000;
+  transform: scale(0.98);
 }
 
 .login-button:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
 .error-message {
-  background: #fee;
-  color: #c33;
+  background: rgba(255, 59, 48, 0.1);
+  color: #ff3b30;
   padding: 12px;
-  border-radius: 8px;
+  border-radius: 12px;
+  font-size: 14px;
   margin-bottom: 20px;
-  text-align: center;
+}
+
+.auth-switch {
+  margin-top: 25px;
+  font-size: 14px;
+  color: var(--apple-text-secondary);
+}
+
+.auth-link {
+  color: var(--apple-blue);
+  background: none;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
 }
 
 .demo-info {
-  margin-top: 20px;
-  font-size: 0.85rem;
-  color: #999;
-  text-align: center;
+  margin-top: 30px;
+  font-size: 12px;
+  color: #c7c7cc;
   line-height: 1.5;
 }

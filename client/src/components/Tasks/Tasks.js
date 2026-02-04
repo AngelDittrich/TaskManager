@@ -97,58 +97,58 @@ const Tasks = () => {
   return (
     <div className="bento-grid tasks-layout animate-fade-in">
       {/* Header Card */}
-      <Card variant="primary" className="grid-item span-4-col">
+      <div className="grid-item span-4-col tasks-header-container">
         <div className="tasks-header">
           <h2>Tasks</h2>
-          <button onClick={handleCreate} className="btn-primary">
+          <button onClick={handleCreate} className="primary">
             + New Task
           </button>
         </div>
-      </Card>
 
-      {/* Filters Card */}
-      <Card variant="primary" className="grid-item span-4-col">
-        <div className="tasks-filters">
-          <div className="filter-group">
-            <label>Estado:</label>
-            <select
-              value={filters.status}
-              onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="filter-select"
-            >
-              <option value="">Todos los estados</option>
-              <option value="pendiente">Pendiente</option>
-              <option value="en-progreso">En Progreso</option>
-              <option value="completada">Completada</option>
-              <option value="cancelada">Cancelada</option>
-            </select>
-          </div>
+        {/* Filters Card */}
+        <div className="grid-item span-4-col tasks-header-filters">
+          <div className="tasks-filters">
+            <div className="filter-group">
+              <label>Estado:</label>
+              <select
+                value={filters.status}
+                onChange={(e) => setFilters({ ...filters, status: e.target.value })}
+                className="filter-select"
+              >
+                <option value="">Todos los estados</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="en-progreso">En Progreso</option>
+                <option value="completada">Completada</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
 
-          <div className="filter-group">
-            <label>Fecha de entrega:</label>
-            <div className="filter-buttons">
-              <button
-                className={`filter-btn ${filters.dueStatus === '' || filters.dueStatus === 'all' ? 'active' : ''}`}
-                onClick={() => setFilters({ ...filters, dueStatus: 'all' })}
-              >
-                Todas
-              </button>
-              <button
-                className={`filter-btn ${filters.dueStatus === 'onTime' ? 'active' : ''}`}
-                onClick={() => setFilters({ ...filters, dueStatus: 'onTime' })}
-              >
-                En fecha
-              </button>
-              <button
-                className={`filter-btn overdue ${filters.dueStatus === 'overdue' ? 'active' : ''}`}
-                onClick={() => setFilters({ ...filters, dueStatus: 'overdue' })}
-              >
-                Vencidas
-              </button>
+            <div className="filter-group">
+              <label>Fecha de entrega:</label>
+              <div className="filter-buttons">
+                <button
+                  className={`filter-btn ${filters.dueStatus === '' || filters.dueStatus === 'all' ? 'active' : ''}`}
+                  onClick={() => setFilters({ ...filters, dueStatus: 'all' })}
+                >
+                  Todas
+                </button>
+                <button
+                  className={`filter-btn ${filters.dueStatus === 'onTime' ? 'active' : ''}`}
+                  onClick={() => setFilters({ ...filters, dueStatus: 'onTime' })}
+                >
+                  En fecha
+                </button>
+                <button
+                  className={`filter-btn overdue ${filters.dueStatus === 'overdue' ? 'active' : ''}`}
+                  onClick={() => setFilters({ ...filters, dueStatus: 'overdue' })}
+                >
+                  Vencidas
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       {/* Tasks Grid */}
       {loading ? (

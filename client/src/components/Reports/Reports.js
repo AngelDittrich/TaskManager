@@ -55,9 +55,9 @@ const Reports = () => {
   };
 
   return (
-    <div className="bento-grid reports-layout animate-fade-in">
+    <div className="bento-grid bento-grid-5 reports-layout animate-fade-in">
       {/* 1. Header & Controls */}
-      <Card variant="primary" className="grid-item span-4-col">
+      <Card variant="primary" className="grid-item span-5-col">
         <div className="reports-header">
           <h2>Generación de Reportes</h2>
           <div className="reports-buttons">
@@ -91,9 +91,8 @@ const Reports = () => {
             </button>
           </div>
         </div>
-      </Card>
 
-      {/* 2. Filters (Conditional) */}
+        {/* 2. Filters (Conditional) */}
       {(activeReport === 'tasks' || activeReport === 'projects') && (
         <Card variant="primary" className="grid-item span-4-col">
           <div className="report-filters">
@@ -134,10 +133,13 @@ const Reports = () => {
           </div>
         </Card>
       )}
+      </Card>
+
+      
 
       {/* 3. Loading State */}
       {loading && (
-        <div className="grid-item span-4-col" style={{ textAlign: 'center', padding: '2rem' }}>
+        <div className="grid-item span-5-col" style={{ textAlign: 'center', padding: '2rem' }}>
           <p>Generando reporte...</p>
         </div>
       )}
@@ -152,7 +154,7 @@ const Reports = () => {
 
       {/* 5. Data Table */}
       {reportData && (
-        <Card variant="primary" className="grid-item span-4-col">
+        <Card variant="primary" className="grid-item span-5-col">
           <div className="report-data">
             {activeReport === 'tasks' && reportData.tasks && (
               <div>

@@ -127,7 +127,7 @@ const TaskModal = ({ task, onClose, onSave }) => {
             <button type="button" onClick={onClose} className="btn-secondary">
               Cancelar
             </button>
-            <button type="submit" className="btn-primary">
+            <button type="submit" className="primary">
               Guardar
             </button>
           </div>
