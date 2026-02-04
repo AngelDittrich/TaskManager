@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getProjects } from '../../services/api';
+import { getProjects, getUsers } from '../../services/api';
 import './TaskModal.css';
 
 const TaskModal = ({ task, onClose, onSave }) => {
@@ -10,7 +10,8 @@ const TaskModal = ({ task, onClose, onSave }) => {
     priority: 'media',
     project: '',
     assignedTo: '',
-    dueDate: ''
+    dueDate: '',
+    estimatedHours: ''
   });
   const [projects, setProjects] = useState([]);
   const [users, setUsers] = useState([]);
@@ -24,18 +25,23 @@ const TaskModal = ({ task, onClose, onSave }) => {
         priority: task.priority || 'media',
         project: task.project?._id || '',
         assignedTo: task.assignedTo?._id || '',
-        dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : ''
+        dueDate: task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '',
+        estimatedHours: task.estimatedHours || ''
       });
     }
-    loadProjects();
+    loadData();
   }, [task]);
 
-  const loadProjects = async () => {
+  const loadData = async () => {
     try {
-      const response = await getProjects();
-      setProjects(response.data);
+      const [projectsRes, usersRes] = await Promise.all([
+        getProjects(),
+        getUsers()
+      ]);
+      setProjects(projectsRes.data);
+      setUsers(usersRes.data);
     } catch (error) {
-      console.error('Error loading projects:', error);
+      console.error('Error loading data:', error);
     }
   };
 
@@ -52,6 +58,7 @@ const TaskModal = ({ task, onClose, onSave }) => {
     if (!data.project) delete data.project;
     if (!data.assignedTo) delete data.assignedTo;
     if (!data.dueDate) delete data.dueDate;
+    if (!data.estimatedHours) delete data.estimatedHours;
     onSave(data);
   };
 
@@ -71,17 +78,21 @@ const TaskModal = ({ task, onClose, onSave }) => {
               value={formData.title}
               onChange={handleChange}
               required
+              placeholder="Nombre de la tarea"
             />
           </div>
+
           <div className="form-group">
             <label>Descripción</label>
             <textarea
               name="description"
               value={formData.description}
               onChange={handleChange}
-              rows="4"
+              rows="3"
+              placeholder="Detalles adicionales..."
             />
           </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Estado</label>
@@ -92,6 +103,7 @@ const TaskModal = ({ task, onClose, onSave }) => {
                 <option value="cancelada">Cancelada</option>
               </select>
             </div>
+
             <div className="form-group">
               <label>Prioridad</label>
               <select name="priority" value={formData.priority} onChange={handleChange}>
@@ -101,6 +113,7 @@ const TaskModal = ({ task, onClose, onSave }) => {
               </select>
             </div>
           </div>
+
           <div className="form-row">
             <div className="form-group">
               <label>Proyecto</label>
@@ -113,6 +126,21 @@ const TaskModal = ({ task, onClose, onSave }) => {
                 ))}
               </select>
             </div>
+
+            <div className="form-group">
+              <label>Asignado a</label>
+              <select name="assignedTo" value={formData.assignedTo} onChange={handleChange}>
+                <option value="">Sin asignar</option>
+                {users.map(user => (
+                  <option key={user._id} value={user._id}>
+                    {user.username}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          <div className="form-row">
             <div className="form-group">
               <label>Fecha de Vencimiento</label>
               <input
@@ -122,7 +150,20 @@ const TaskModal = ({ task, onClose, onSave }) => {
                 onChange={handleChange}
               />
             </div>
+
+            <div className="form-group">
+              <label>Horas Estimadas</label>
+              <input
+                type="number"
+                name="estimatedHours"
+                value={formData.estimatedHours}
+                onChange={handleChange}
+                placeholder="0"
+                min="0"
+              />
+            </div>
           </div>
+
           <div className="modal-actions">
             <button type="button" onClick={onClose} className="btn-secondary">
               Cancelar
