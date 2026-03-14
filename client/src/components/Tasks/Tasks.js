@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getTasks, createTask, updateTask, deleteTask } from '../../services/api';
 import TaskCard from './TaskCard';
 import TaskModal from './TaskModal';
+import TaskGrid from './TaskGrid';
 import Card from '../UI/Card';
 import './Tasks.css';
 
@@ -67,6 +68,16 @@ const Tasks = () => {
         console.error('Error deleting task:', error);
         alert('Error al eliminar la tarea');
       }
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await updateTask(id, { status: newStatus });
+      loadTasks();
+    } catch (error) {
+      console.error('Error updating task status:', error);
+      alert('Error al actualizar el estado de la tarea');
     }
   };
 
@@ -160,15 +171,14 @@ const Tasks = () => {
           <div className="empty-state">No hay tareas disponibles</div>
         </Card>
       ) : (
-        filteredTasks.map(task => (
-          <div key={task._id} className="grid-item">
-            <TaskCard
-              task={task}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-            />
-          </div>
-        ))
+        <div className="grid-item span-4-col" style={{ width: '100%' }}>
+          <TaskGrid
+            tasks={filteredTasks}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onStatusChange={handleStatusChange}
+          />
+        </div>
       )}
 
       {showModal && (

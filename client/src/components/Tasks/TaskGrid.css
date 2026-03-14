@@ -1,0 +1,119 @@
+.drop-zones-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.drop-zones-container.dragging {
+    display: block;
+}
+
+.drop-zone {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    border: 3px dashed #ccc;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.drop-zone.is-over {
+    border-style: solid;
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Zone positions and specific styling */
+.drop-zone-top {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    height: 120px;
+}
+
+.drop-zone-top.is-over {
+    background: rgba(255, 71, 87, 0.15);
+    /* #ff4757 for delete */
+    border-color: #ff4757;
+    transform: translateX(-50%) scale(1.05);
+}
+
+.drop-zone-top.is-over .drop-zone-content {
+    color: #ff4757;
+}
+
+.drop-zone-left {
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    width: 250px;
+    height: calc(100vh - 200px);
+}
+
+.drop-zone-left.is-over {
+    background: rgba(55, 66, 250, 0.15);
+    /* #3742fa for in-progress */
+    border-color: #3742fa;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.drop-zone-left.is-over .drop-zone-content {
+    color: #3742fa;
+}
+
+.drop-zone-right {
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    width: 250px;
+    height: calc(100vh - 200px);
+}
+
+.drop-zone-right.is-over {
+    background: rgba(46, 213, 115, 0.15);
+    /* #2ed573 for complete */
+    border-color: #2ed573;
+    transform: translateY(-50%) scale(1.05);
+}
+
+.drop-zone-right.is-over .drop-zone-content {
+    color: #2ed573;
+}
+
+.drop-zone-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    color: #747d8c;
+    transition: color 0.3s ease;
+}
+
+.drop-zone-icon {
+    font-size: 3rem;
+}
+
+.drop-zone-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.task-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
