@@ -12,6 +12,10 @@ import DropZone from './DropZone';
 import TaskCard from './TaskCard';
 import './TaskGrid.css';
 
+// Hardcoded offset to compensate for the sidebar + layout margin-left
+// The sidebar is 260px wide plus padding (~20px), total ~280px.
+const OVERLAY_OFFSET_X = -280;
+
 const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
     const [activeTask, setActiveTask] = useState(null);
 
@@ -40,6 +44,7 @@ const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
             } else if (over.id === 'complete-zone') {
                 onStatusChange(active.id, 'completada');
             }
+            // 'cancel-zone' and no drop → do nothing
         }
         setActiveTask(null);
     };
@@ -53,7 +58,7 @@ const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
         >
-            {/* Drop Zones container overlaid on top */}
+            {/* Drop Zones — portalled directly to body for correct viewport coords */}
             {createPortal(
                 <div className={`drop-zones-container ${isDragging ? 'dragging' : ''}`}>
                     <DropZone
@@ -77,6 +82,13 @@ const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
                         title="Complete"
                         icon="✔"
                     />
+                    <DropZone
+                        id="cancel-zone"
+                        position="center"
+                        active={isDragging}
+                        title="Cancel"
+                        icon="✕"
+                    />
                 </div>,
                 document.body
             )}
@@ -89,7 +101,16 @@ const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
 
             <DragOverlay>
                 {activeTask ? (
-                    <TaskCard task={activeTask} onEdit={() => { }} onDelete={() => { }} isOverlay />
+                    // translateX offset compensates the sidebar margin-left
+                    // so the overlay card appears under the cursor, not shifted right
+                    <div style={{ transform: `translateX(${OVERLAY_OFFSET_X}px)` }}>
+                        <TaskCard
+                            task={activeTask}
+                            onEdit={() => { }}
+                            onDelete={() => { }}
+                            isOverlay
+                        />
+                    </div>
                 ) : null}
             </DragOverlay>
         </DndContext>

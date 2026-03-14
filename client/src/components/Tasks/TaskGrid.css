@@ -13,104 +13,133 @@
     display: block;
 }
 
+/* --- Glassmorphism Base --- */
 .drop-zone {
     position: absolute;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(8px);
-    border: 3px dashed #ccc;
-    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(24px) saturate(180%);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: auto;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .drop-zone.is-over {
     border-style: solid;
-    transform: scale(1.05);
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    transform: scale(1.04);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-/* Zone positions and specific styling */
+/* ---- TOP: Delete ---- */
 .drop-zone-top {
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    width: 300px;
+    width: 320px;
     height: 120px;
 }
 
 .drop-zone-top.is-over {
-    background: rgba(255, 71, 87, 0.15);
-    /* #ff4757 for delete */
-    border-color: #ff4757;
-    transform: translateX(-50%) scale(1.05);
+    background: rgba(255, 71, 87, 0.18);
+    border-color: rgba(255, 71, 87, 0.6);
+    transform: translateX(-50%) scale(1.04);
+    box-shadow: 0 0 40px rgba(255, 71, 87, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .drop-zone-top.is-over .drop-zone-content {
     color: #ff4757;
 }
 
+/* ---- LEFT: In Progress ---- */
 .drop-zone-left {
     top: 50%;
     left: 20px;
     transform: translateY(-50%);
-    width: 250px;
+    width: 230px;
     height: calc(100vh - 200px);
 }
 
 .drop-zone-left.is-over {
-    background: rgba(55, 66, 250, 0.15);
-    /* #3742fa for in-progress */
-    border-color: #3742fa;
-    transform: translateY(-50%) scale(1.05);
+    background: rgba(55, 66, 250, 0.14);
+    border-color: rgba(55, 66, 250, 0.55);
+    transform: translateY(-50%) scale(1.04);
+    box-shadow: 0 0 40px rgba(55, 66, 250, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .drop-zone-left.is-over .drop-zone-content {
     color: #3742fa;
 }
 
+/* ---- RIGHT: Complete ---- */
 .drop-zone-right {
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
-    width: 250px;
+    width: 230px;
     height: calc(100vh - 200px);
 }
 
 .drop-zone-right.is-over {
-    background: rgba(46, 213, 115, 0.15);
-    /* #2ed573 for complete */
-    border-color: #2ed573;
-    transform: translateY(-50%) scale(1.05);
+    background: rgba(46, 213, 115, 0.14);
+    border-color: rgba(46, 213, 115, 0.55);
+    transform: translateY(-50%) scale(1.04);
+    box-shadow: 0 0 40px rgba(46, 213, 115, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .drop-zone-right.is-over .drop-zone-content {
     color: #2ed573;
 }
 
+/* ---- CENTER: Cancel ---- */
+.drop-zone-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+}
+
+.drop-zone-center.is-over {
+    background: rgba(116, 125, 140, 0.18);
+    border-color: rgba(116, 125, 140, 0.55);
+    transform: translate(-50%, -50%) scale(1.06);
+    box-shadow: 0 0 40px rgba(116, 125, 140, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.drop-zone-center.is-over .drop-zone-content {
+    color: #747d8c;
+}
+
+/* ---- Shared content styles ---- */
 .drop-zone-content {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    color: #747d8c;
+    gap: 12px;
+    color: rgba(100, 110, 130, 0.7);
     transition: color 0.3s ease;
+    user-select: none;
 }
 
 .drop-zone-icon {
-    font-size: 3rem;
+    font-size: 2.6rem;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.12));
 }
 
 .drop-zone-title {
-    font-size: 1.5rem;
-    font-weight: bold;
+    font-size: 1.1rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
 }
 
+/* ---- Task grid ---- */
 .task-grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
