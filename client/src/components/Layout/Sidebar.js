@@ -6,7 +6,8 @@ import {
     MdCheckCircle,
     MdFolder,
     MdAssessment,
-    MdNotifications
+    MdNotifications,
+    MdDataUsage
 } from 'react-icons/md';
 
 const Sidebar = ({ activeTab, onTabChange }) => {
@@ -23,6 +24,7 @@ const Sidebar = ({ activeTab, onTabChange }) => {
         { id: 'tareas', label: 'Tasks', icon: <MdCheckCircle /> },
         { id: 'proyectos', label: 'Projects', icon: <MdFolder /> },
         { id: 'reportes', label: 'Reports', icon: <MdAssessment /> },
+        { id: 'cargas', label: 'Workload', icon: <MdDataUsage /> },
         { id: 'notificaciones', label: 'Notifications', icon: <MdNotifications /> },
     ];
 

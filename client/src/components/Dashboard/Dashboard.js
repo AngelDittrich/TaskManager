@@ -20,6 +20,7 @@ import History from '../History/History';
 import Notifications from '../Notifications/Notifications';
 import Search from '../Search/Search';
 import Reports from '../Reports/Reports';
+import Workload from '../Workload/Workload';
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
@@ -254,6 +255,8 @@ const Dashboard = () => {
         return <Search />;
       case 'reportes':
         return <Reports />;
+      case 'cargas':
+        return <Workload />;
       default:
         return null;
     }
