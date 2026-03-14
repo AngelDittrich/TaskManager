@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
     DndContext,
     DragOverlay,
@@ -53,29 +54,32 @@ const TaskGrid = ({ tasks, onEdit, onDelete, onStatusChange }) => {
             onDragEnd={handleDragEnd}
         >
             {/* Drop Zones container overlaid on top */}
-            <div className={`drop-zones-container ${isDragging ? 'dragging' : ''}`}>
-                <DropZone
-                    id="delete-zone"
-                    position="top"
-                    active={isDragging}
-                    title="Delete"
-                    icon="🗑"
-                />
-                <DropZone
-                    id="progress-zone"
-                    position="left"
-                    active={isDragging}
-                    title="In Progress"
-                    icon="⏳"
-                />
-                <DropZone
-                    id="complete-zone"
-                    position="right"
-                    active={isDragging}
-                    title="Complete"
-                    icon="✔"
-                />
-            </div>
+            {createPortal(
+                <div className={`drop-zones-container ${isDragging ? 'dragging' : ''}`}>
+                    <DropZone
+                        id="delete-zone"
+                        position="top"
+                        active={isDragging}
+                        title="Delete"
+                        icon="🗑"
+                    />
+                    <DropZone
+                        id="progress-zone"
+                        position="left"
+                        active={isDragging}
+                        title="In Progress"
+                        icon="⏳"
+                    />
+                    <DropZone
+                        id="complete-zone"
+                        position="right"
+                        active={isDragging}
+                        title="Complete"
+                        icon="✔"
+                    />
+                </div>,
+                document.body
+            )}
 
             <div className="task-grid-container">
                 {tasks.map((task) => (
