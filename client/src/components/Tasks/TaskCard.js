@@ -1,6 +1,5 @@
 import React from 'react';
 import { useDraggable } from '@dnd-kit/core';
-import { CSS } from '@dnd-kit/utilities';
 import { FaEdit, FaTrash, FaCalendar, FaUser, FaProjectDiagram } from 'react-icons/fa';
 import { format } from 'date-fns';
 import './TaskCard.css';
@@ -11,11 +10,11 @@ const TaskCard = ({ task, onEdit, onDelete, isOverlay }) => {
     data: task,
   });
 
-  const style = transform
-    ? {
-      transform: CSS.Translate.toString(transform),
-    }
-    : undefined;
+  // When using DragOverlay, do NOT apply transform to the original element.
+  // The original card just becomes invisible (handled by .is-dragging CSS).
+  // The DragOverlay is what follows the cursor — applying transform here
+  // causes the card to jump by the sidebar's margin-left offset.
+  const style = undefined;
 
   const statusColors = {
     'pendiente': '#ffa502',
